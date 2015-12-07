@@ -125,7 +125,15 @@ Graph graphTest(void)
 
 int main(int argc, char* argv[])
 {
+	int startvertex = 0, endvertex = 0;
+	string strmess;
 	Graph maingraph{};
-	maingraph = graphTest();
+	maingraph=graphTest();
 	//maingraph now has the graph with vertices and edges that we'll use for the rest of this PA
+	cout << "What vertex do you want to start the message from?" << endl;
+	cin >> startvertex;
+	cout << "What vertex do you want to send the message to?" << endl;
+	cin >> startvertex;
+	cout << "What string message do you want to send?" << endl;
+	cin >> strmess;
 }
