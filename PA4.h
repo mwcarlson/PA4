@@ -14,5 +14,6 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <queue>
 	
 #endif
