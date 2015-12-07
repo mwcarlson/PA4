@@ -4,6 +4,10 @@
 #include <iostream>
 #include "Graph.h"
 #include "Vertex.h"
+#include "Path.h"
+#include "Network.h"
+#include "Message.h"
+#include "Packet.h"
 #include <cstdlib>
 #include <unordered_map>
 #include <vector>
