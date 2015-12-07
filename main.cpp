@@ -11,6 +11,7 @@ Graph graphTest(void)
 	string curstring, modstring;
 	Graph graph{};
 	vector<Vertex> vertices{};
+	
 	cout << "Enter a name to read graph info from: " << endl;
 	getline(cin, curstring);
 	ifstream input(curstring);
@@ -27,7 +28,6 @@ Graph graphTest(void)
 		{
 			//We need to add a edge
 			vertices.push_back(Vertex{});
-			
 		}
 		
 		i++;
@@ -41,18 +41,20 @@ Graph graphTest(void)
 			if (focusmod == 0)
 			{
 				//modstring now represents the originating node of the vector
-				
 				fromvec = stoi(modstring);
 			}
+			
 			else if (focusmod == 1)
 			{
 				//modstring now represents the ending node of the vector
 				tovec = stoi(modstring);
 			}
+			
 			//Change what it is we're reading (from, to, weight), and clean string
 			focusmod = (focusmod + 1) % 3;
 			modstring.clear();
 		}
+		
 		else if (curspot[i] == '\n')
 		{
 			//modstring now represents the weight of the edge 
@@ -62,13 +64,16 @@ Graph graphTest(void)
 			modstring.clear();
 			focusmod = (focusmod + 1) % 3;
 		}
+		
 		else
 		{
 			//Need to add value to modstring
 			modstring += curspot[i];
 		}
+		
 		i++;
 	}
+	
 	//V I had a slight off-by 1 error, so these next few lines just does what my case '\n' does.
 	weightedge = stoi(modstring);
 	//cout << "From vec: " << fromvec << " to vec: " << tovec << " with weight " << weightedge << endl;
@@ -76,6 +81,7 @@ Graph graphTest(void)
 	vertices[fromvec].addEdge(&vertices[tovec], weightedge);
 	modstring.clear();
 	//V  Adds all of the vertices to the graph
+	
 	for (auto vertex : vertices)
 	{
 		graph.addVertex(vertex);
@@ -120,6 +126,6 @@ Graph graphTest(void)
 int main(int argc, char* argv[])
 {
 	Graph maingraph{};
-	maingraph=graphTest();
+	maingraph = graphTest();
 	//maingraph now has the graph with vertices and edges that we'll use for the rest of this PA
 }
