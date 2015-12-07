@@ -20,7 +20,7 @@ public:
 	//MA #12 TODO: IMPLEMENT!
 	unordered_map<Vertex, int> computeShortestPath(Vertex *start)
 	{
-		//holds known distances
+		//holds known distances 
 		unordered_map<Vertex, int> distances;
 
 		//underlying heap
