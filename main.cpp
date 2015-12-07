@@ -152,8 +152,10 @@ int main(int argc, char* argv[])
 	packet.setDestination(0);
 	packet.setNextHop(&vertexe);
 	packet.setOrder(0);
+	
 	cout << strmess<< endl;
 	cout << strmess.size() << endl;
+	
 	while (i < strmess.size())
 	{
 		curchar = strmess[i];
@@ -161,8 +163,6 @@ int main(int argc, char* argv[])
 		packet.setValue(curchar);
 		quepack.push(packet);
 		i++;
-
-
 	}
 	
 	
