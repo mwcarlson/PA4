@@ -15,7 +15,7 @@ Graph graphTest(void)
 	getline(cin, curstring);
 	ifstream input(curstring);
 	//I used http://www.cplusplus.com/forum/general/109435/ to help me with this next line (with some modification)
-	string curspot((std::istreambuf_iterator<char>(input)), std::istreambuf_iterator<char>());
+	string curspot((istreambuf_iterator<char>(input)), istreambuf_iterator<char>());
 	//curspot now has entire input file as 1 massive string
 	maxsize = curspot.size();
 	cout << curspot << endl;
