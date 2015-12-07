@@ -1,10 +1,10 @@
 //this project is a collaboration between Michael Carlson (11424987, Section 2) and Martijn Oostrom (11420033, Section 1)
 
-//#include "PA4.h"
+#include "PA4.h"
 
-//using namespace std;
+using namespace std;
 
-#include <cstdlib>
+/*#include <cstdlib>
 #include <iostream>
 #include <unordered_map>
 #include <vector>
@@ -13,7 +13,7 @@
 #include <sstream>
 #include "Graph.h"
 #include "Vertex.h"
-using namespace std;
+using namespace std;*/
 
 Graph graphTest()
 {
