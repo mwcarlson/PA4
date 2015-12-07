@@ -15,5 +15,6 @@
 #include <string>
 #include <sstream>
 #include <queue>
+#include <stack>
 	
 #endif
