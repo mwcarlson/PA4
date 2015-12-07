@@ -1,6 +1,8 @@
 #ifndef PA4_H
 #define PA4_H
 
+using namespace std;
+
 #include <iostream>
 #include "Graph.h"
 #include "Vertex.h"
