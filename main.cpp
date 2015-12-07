@@ -1,6 +1,10 @@
 //this project is a collaboration between Michael Carlson (11424987, Section 2) and Martijn Oostrom (11420033, Section 1)
 
 #include "PA4.h"
+#include "Path.h"
+#include "Packet.h"
+#include "Message.h"
+#include "Network.h"
 
 using namespace std;
 
