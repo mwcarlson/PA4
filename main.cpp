@@ -15,7 +15,7 @@
 #include "Vertex.h"
 using namespace std;
 
-void graphTest()
+Graph graphTest()
 {
 	//populate graph
 	int i = 0,maxsize=0, focusmod=0, fromvec=0, tovec=0, weightedge=0;
@@ -85,11 +85,14 @@ void graphTest()
 	{
 		graph.addVertex(vertex);
 	}
-	unordered_map<Vertex, int> distances = graph.computeShortestPath(&vertices[0]);
+	return graph;
+	/*unordered_map<Vertex, int> distances = graph.computeShortestPath(&vertices[0]);
+
 	cout << "Distance from 0 to 0: " << distances[vertices[0]] << " (expected: 0)" << endl;
 	cout << "Distance from 0 to 1: " << distances[vertices[1]] << " (expected: 4)" << endl;
 	cout << "Distance from 0 to 2: " << distances[vertices[2]] << " (expected: 8)" << endl;
 	cout << "Distance from 0 to 3: " << distances[vertices[3]] << " (expected: 12)" << endl;
+	return graph;
 	/*
 	Graph: 0 -> 1 (weight 4)
 	       0 -> 3 (weight 10)
@@ -119,5 +122,6 @@ void graphTest()
 
 int main(int argc, char* argv[])
 {
-	graphTest();
+	Graph maingraph{};
+	maingraph=graphTest();
 }
