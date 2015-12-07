@@ -1,6 +1,10 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
+
 #include "PA4.h"
+#include "Packet.h"
+#include "Vertex.h"
+
 class Message
 {
 private:
@@ -13,7 +17,7 @@ public:
 	{
 		startingvertex = &Vertex(0);
 		endingvertex = &Vertex(0);
-	
+
 		packets = c;
 	}
 	Message(Vertex *a, Vertex *b, queue<Packet> c)
@@ -30,12 +34,12 @@ public:
 	{
 		return endingvertex;
 	}
-	
+
 	queue<Packet> getqueue()
 	{
 		return packets;
 	}
-	
+
 	void setstart(Vertex* a)
 	{
 		startingvertex = a;
@@ -44,12 +48,12 @@ public:
 	{
 		endingvertex = b;
 	}
-	
+
 	void setqueue(queue<Packet> c)
 	{
-		packets=c;
+		packets = c;
 	}
-	
+
 };
 
 
