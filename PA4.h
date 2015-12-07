@@ -5,8 +5,10 @@
 #include "Graph.h"
 #include "Vertex.h"
 #include <cstdlib>
-#include <ifstream>
 #include <unordered_map>
 #include <vector>
+#include <fstream>
+#include <string>
+#include <sstream>
 	
 #endif
