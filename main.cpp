@@ -4,10 +4,10 @@
 
 using namespace std;
 
-Graph graphTest()
+Graph graphTest(void)
 {
 	//populate graph
-	int i = 0,maxsize=0, focusmod=0, fromvec=0, tovec=0, weightedge=0;
+	int i = 0, maxsize = 0, focusmod = 0, fromvec = 0, tovec = 0, weightedge = 0;
 	string curstring, modstring;
 	Graph graph{};
 	vector<Vertex> vertices{};
