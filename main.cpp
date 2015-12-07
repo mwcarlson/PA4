@@ -25,7 +25,7 @@ Graph graphTest()
 	cout << "Enter a name to read graph info from: " << endl;
 	getline(cin, curstring);
 	ifstream input(curstring);
-	std::string curspot((std::istreambuf_iterator<char>(input)), std::istreambuf_iterator<char>());
+	string curspot((std::istreambuf_iterator<char>(input)), std::istreambuf_iterator<char>());
 	maxsize = curspot.size();
 	cout << curspot << endl;
 	
