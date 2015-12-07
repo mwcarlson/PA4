@@ -1,21 +1,18 @@
 //this project is a collaboration between Michael Carlson (11424987, Section 2) and Martijn Oostrom (11420033, Section 1)
 
 #include "PA4.h"
-#include "Path.h"
-#include "Packet.h"
+#include "Graph.h"
+#include "Vertex.h"
 #include "Message.h"
-#include "Network.h"
+//using namespace std;
 
-using namespace std;
-
-Graph graphTest(void)
+Graph graphTest()
 {
 	//populate graph
-	int i = 0, maxsize = 0, focusmod = 0, fromvec = 0, tovec = 0, weightedge = 0;
+	int i = 0,maxsize=0, focusmod=0, fromvec=0, tovec=0, weightedge=0;
 	string curstring, modstring;
 	Graph graph{};
 	vector<Vertex> vertices{};
-	
 	cout << "Enter a name to read graph info from: " << endl;
 	getline(cin, curstring);
 	ifstream input(curstring);
@@ -32,6 +29,7 @@ Graph graphTest(void)
 		{
 			//We need to add a edge
 			vertices.push_back(Vertex{});
+			
 		}
 		
 		i++;
@@ -45,20 +43,18 @@ Graph graphTest(void)
 			if (focusmod == 0)
 			{
 				//modstring now represents the originating node of the vector
+				
 				fromvec = stoi(modstring);
 			}
-			
 			else if (focusmod == 1)
 			{
 				//modstring now represents the ending node of the vector
 				tovec = stoi(modstring);
 			}
-			
 			//Change what it is we're reading (from, to, weight), and clean string
 			focusmod = (focusmod + 1) % 3;
 			modstring.clear();
 		}
-		
 		else if (curspot[i] == '\n')
 		{
 			//modstring now represents the weight of the edge 
@@ -68,16 +64,13 @@ Graph graphTest(void)
 			modstring.clear();
 			focusmod = (focusmod + 1) % 3;
 		}
-		
 		else
 		{
 			//Need to add value to modstring
 			modstring += curspot[i];
 		}
-		
 		i++;
 	}
-	
 	//V I had a slight off-by 1 error, so these next few lines just does what my case '\n' does.
 	weightedge = stoi(modstring);
 	//cout << "From vec: " << fromvec << " to vec: " << tovec << " with weight " << weightedge << endl;
@@ -85,14 +78,14 @@ Graph graphTest(void)
 	vertices[fromvec].addEdge(&vertices[tovec], weightedge);
 	modstring.clear();
 	//V  Adds all of the vertices to the graph
-	
 	for (auto vertex : vertices)
 	{
 		graph.addVertex(vertex);
+		
 	}
-	return graph;
+	//return graph;
 	
-	/*The below code is just a bunch of testing statements that aren't entirely related to the code. Feel free to ignore
+	//The below code is just a bunch of testing statements that aren't entirely related to the code. Feel free to ignore
 	unordered_map<Vertex, int> distances = graph.computeShortestPath(&vertices[0]);
 
 	cout << "Distance from 0 to 0: " << distances[vertices[0]] << " (expected: 0)" << endl;
@@ -129,15 +122,48 @@ Graph graphTest(void)
 
 int main(int argc, char* argv[])
 {
-	int startvertex = 0, endvertex = 0;
+	char curchar = '\0';
+	int startvertex = 0, endvertex = 0,i=0;
 	string strmess;
 	Graph maingraph{};
+	Packet packet{};
+	
+	queue<Packet> quepack;
 	maingraph=graphTest();
 	//maingraph now has the graph with vertices and edges that we'll use for the rest of this PA
+	
 	cout << "What vertex do you want to start the message from?" << endl;
 	cin >> startvertex;
 	cout << "What vertex do you want to send the message to?" << endl;
-	cin >> startvertex;
+	cin >> endvertex;
 	cout << "What string message do you want to send?" << endl;
-	cin >> strmess;
+	ws(cin);
+	getline(cin, strmess);
+
+	Vertex vertexs{ startvertex };
+	
+	Vertex vertexe{ endvertex };
+	
+	packet.setPreviousLocation(&vertexs);
+
+
+	packet.setDestination(&vertexe);
+	packet.setCurrentWait(0);
+	packet.setDestination(0);
+	packet.setNextHop(&vertexe);
+	packet.setOrder(0);
+	cout << strmess<< endl;
+	cout << strmess.size() << endl;
+	while (i < strmess.size())
+	{
+		curchar = strmess[i];
+		cout << curchar << endl;
+		packet.setValue(curchar);
+		quepack.push(packet);
+		i++;
+
+
+	}
+	
+	
 }
