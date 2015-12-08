@@ -11,10 +11,12 @@ class Vertex
 private:
 	int _id;
 	static int _id_counter;
+	
 	unordered_map<Vertex *, int> _edges;
-
+	//unordered_map<int, int> weight;
 	//cheater method for tracking path weight
 	int _path_weight = 0;
+	int loadfactor = 1;
 
 public:
 
@@ -42,10 +44,26 @@ public:
 	{
 		_path_weight = weight;
 	}
+	int getload() const
+	{
+		return loadfactor;
+	}
 
+	void setload(int weight)
+	{
+		loadfactor = weight;
+	}
+	void plusload()
+	{
+		loadfactor++;
+	}
 	int getId() const
 	{
 		return _id;
+	}
+	void setid(int id)
+	{
+		_id = id;
 	}
 
 	void addEdge(Vertex *vertex, int weight)
