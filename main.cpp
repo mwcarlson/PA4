@@ -1,7 +1,3 @@
-//this project is a collaboration between Michael Carlson (11424987, Section 2) and Martijn Oostrom (11420033, Section 1)
-
-
-
 #include "PA4.h"
 #include "Graph.h"
 #include "Vertex.h"
@@ -171,12 +167,12 @@ Graph graphTest()
 	//return graph;
 	
 	//The below code is just a bunch of testing statements that aren't entirely related to the code. Feel free to ignore
-	unordered_map<Vertex, int> distances = graph.computeShortestPath(&vertices[0]);
+	/*unordered_map<Vertex, int> distances = graph.computeShortestPath(&vertices[0]);
 
 	cout << "Distance from 0 to 0: " << distances[vertices[0]] << " (expected: 0)" << endl;
 	cout << "Distance from 0 to 1: " << distances[vertices[1]] << " (expected: 4)" << endl;
 	cout << "Distance from 0 to 2: " << distances[vertices[2]] << " (expected: 8)" << endl;
-	cout << "Distance from 0 to 3: " << distances[vertices[3]] << " (expected: 12)" << endl;
+	cout << "Distance from 0 to 3: " << distances[vertices[3]] << " (expected: 12)" << endl;*/
 	return graph;
 	/*
 	Graph: 0 -> 1 (weight 4)
@@ -207,8 +203,9 @@ Graph graphTest()
 
 int main(int argc, char* argv[])
 {
+	cout << "Team members for this assignment are: Michael Carlson (11424987, Section 2) and Martijn Oostrom (11420033, Section 1)" << endl;
 	char curchar = '\0';
-	int startvertex = 0, endvertex = 0,i=0;
+	int startvertex = 0, endvertex = 0, i=0;
 	string strmess;
 	Graph maingraph{};
 	Packet packet{};
@@ -271,13 +268,13 @@ int main(int argc, char* argv[])
 		
 		maingraph=network.getgraph();
 		cout << "hi5" << endl;
-		distances = maingraph.computeShortestPath(&vertices[0]);
+		distances=maingraph.computeShortestPath(&vertices[0]);
 		cout << "hi4" << endl;
-		edgelength=distances[vertices[1]];
+		/*edgelength=distances[vertices[1]];
 		packet.setCurrentWait(edgelength*vertices[1].getload());
 		packet.setDestination(&vertices[1]);
 		packet.setPreviousLocation(&vertices[0]);
-		vertices[1].plusload();
+		vertices[1].plusload();*/
 		i++;
 		
 		
