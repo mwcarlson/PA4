@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <queue>
 #include <functional>
+
 #include "Vertex.h"
 using namespace std;
 class Graph
@@ -19,7 +20,7 @@ public:
 	//MA #12 TODO: IMPLEMENT!
 	unordered_map<Vertex, int> computeShortestPath(Vertex *start)
 	{
-		//holds known distances 
+		//holds known distances
 		unordered_map<Vertex, int> distances;
 
 		//underlying heap
@@ -45,7 +46,7 @@ public:
 				if (distances.find(top) == distances.end())
 				{
 					//make known
-					int current_path_weight = top.getPathWeight();
+					int current_path_weight = top.getPathWeight()*top.getload();
 					distances[top] = current_path_weight;
 
 					//push on outgoing edges
