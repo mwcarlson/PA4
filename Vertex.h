@@ -1,139 +1,98 @@
-#ifndef VERTEX_H
-#define VERTEX_H
+#ifndef PACKET_H
+#define PACKET_H
 
-#include <string>
-#include <queue>
-#include <unordered_map>
-using namespace std;
+#include "PA4.h"
 
-class Vertex
+class Packet
 {
 private:
-	int _id;
-	static int _id_counter;
-	
-	unordered_map<Vertex *, int> _edges;
-	//unordered_map<int, int> weight;
-	//cheater method for tracking path weight
-	int _path_weight = 0;
-	int loadfactor = 1;
+	char _value;
+	int _order;
+	int _current_wait;
+	Vertex *_destination;
+	Vertex *_previous_location;
+	Vertex *_next_hop;
 
 public:
-
-	Vertex()
+	Packet(void)
 	{
-		_id_counter++;
-		_id = _id_counter;
+		_value = NULL;
+		_order = 0;
+		_current_wait = 0;
+		_destination = &Vertex(0);
+		_previous_location = &Vertex(0);
+		_next_hop = &Vertex(0);
 	}
 
-	Vertex(int id)
+	Packet(char value, int order, int current_wait, Vertex *destination, Vertex *previous_location, Vertex *next_hop)
 	{
-		if (id >= _id_counter)
-		{
-			_id_counter = id + 1;
-		}
-		_id = id;
+		_value = value;
+		_order = order;
+		_current_wait = current_wait;
+		_destination = destination;
+		_previous_location = previous_location;
+		_next_hop = next_hop;
 	}
 
-	int getPathWeight() const
+	char getValue(void)
 	{
-		return _path_weight;
+		return _value;
 	}
 
-	void setPathWeight(int weight)
+	void setValue(char value)
 	{
-		_path_weight = weight;
-	}
-	int getload() const
-	{
-		return loadfactor;
+		_value = value;
 	}
 
-	void setload(int weight)
+	int getOrder(void)
 	{
-		loadfactor = weight;
-	}
-	void plusload()
-	{
-		loadfactor++;
-	}
-	int getId() const
-	{
-		return _id;
-	}
-	void setid(int id)
-	{
-		_id = id;
+		return _order;
 	}
 
-	void addEdge(Vertex *vertex, int weight)
+	void setOrder(int order)
 	{
-		_edges[vertex] = weight;
+		_order = order;
 	}
 
-	int getEdgeWeight(Vertex *edge)
+	int getCurrentWait(void)
 	{
-		return _edges[edge];
+		return _current_wait;
 	}
 
-	unordered_map<Vertex *, int> &getEdges()
+	void setCurrentWait(int current_wait)
 	{
-		return _edges;
+		_current_wait = current_wait;
 	}
 
-	void removeEdge(Vertex *vertex)
+	Vertex* getDestination(void)
 	{
-		_edges.erase(vertex);
+		return _destination;
+	}
+
+	void setDestination(Vertex* destination)
+	{
+		_destination = destination;
+	}
+
+	Vertex* getPreviousLocation(void)
+	{
+		return _previous_location;
+	}
+
+	void setPreviousLocation(Vertex* previous_location)
+	{
+		_previous_location = previous_location;
+	}
+
+	Vertex* getNextHop(void)
+	{
+		return _next_hop;
+	}
+
+	void setNextHop(Vertex* next_hop)
+	{
+		_next_hop = next_hop;
 	}
 };
 
-int operator==(const Vertex &lhs, const Vertex &rhs)
-{
-	return lhs.getId() == rhs.getId();
-}
-
-bool operator<(const Vertex &lhs, const Vertex &rhs)
-{
-	return lhs.getId() < rhs.getId();
-}
-
-bool operator>(const Vertex &lhs, const Vertex &rhs)
-{
-	return lhs.getId() > rhs.getId();
-}
-
-class PathWeightComparer
-{
-public:
-	bool operator()(const Vertex lhs, const Vertex rhs)
-	{
-		return (lhs.getPathWeight() > rhs.getPathWeight());
-	}
-};
-
-//hashing algorithm must exist in STD namespace
-namespace std {
-
-	template <>
-	struct hash<Vertex>
-	{
-		//provide a hash (convert grocery item into integer)
-		std::size_t operator()(const Vertex& item) const
-		{
-			size_t hash_val = 0;
-
-			//to hash INTs using the STL
-			hash<int> int_hash{};
-
-			//define hashing algorithm.  Ours is pretty easy...
-			hash_val = int_hash(item.getId());
-
-			//add others as necessary
-			return hash_val;
-		}
-	};
-}
-
-
-int Vertex::_id_counter = 0;
 #endif
