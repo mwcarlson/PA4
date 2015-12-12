@@ -261,7 +261,7 @@ int main(int argc, char* argv[])
 	network.setmessage(message);
 	unordered_map<Vertex, int> *distances;
 	unordered_map<Vertex, int> *edgelength;
-	int bob = 0;
+	//int bob = 0;
 	while (i<quepack.size())
 	{
 		//Still have parts of message to put onto graph
@@ -271,17 +271,19 @@ int main(int argc, char* argv[])
 		vertexs = *packet.getPreviousLocation();
 		
 		
-		cout << "hi4" << endl;
+		
 		distances=maingraph.computeShortestPath(message.getstart());
 		
-		cout << "hi5" << endl;
 		//edgelength = &distances[0];
-		edgelength = distances[message.getstart()];
+		//edgelength = distances[message.getstart()];
 		//bob=(distances->begin())->second();
-		cout << "hi6" << endl;
-		packet.setCurrentWait(edgelength*vertices[1].getload());
+	
+		//packet.setCurrentWait(edgelength*vertices[1].getload());
+
+		//Set packet on course for next spot
 		packet.setDestination(&vertices[1]);
 		packet.setPreviousLocation(&vertices[0]);
+		//packet.setCurrentWait(edgelength);
 		vertices[1].plusload();
 		vertices[0].plusload();
 		i++;
@@ -303,20 +305,20 @@ int main(int argc, char* argv[])
 				vertexs.minusload();
 				vertexe = *(packet.getNextHop());
 				vertexe.minusload();
-				cout << "he2" << endl;
+				
 				vertexd = *(packet.getDestination());
 				//if (vertexe.getId() != vertexd.getId())
 				{
 
 					//Vertex that packet just arrived to was not the ending vector
-					cout << "he5" << endl;
+				
 					//packet hasn't arrived at its destination yet
 					distances = maingraph.computeShortestPath(&vertexe);
 					//edgelength = distances[vertices[1]];
-					cout << "he3" << endl;
-					packet.setCurrentWait(edgelength*vertices[1].getload());
+				
+				//	packet.setCurrentWait(edgelength*vertices[1].getload());
 					packet.setDestination(&vertices[1]);
-					cout << "he4" << endl;
+					
 					packet.setPreviousLocation(&vertices[0]);
 					vertices[1].plusload();
 					vertices[0].plusload();
@@ -324,7 +326,7 @@ int main(int argc, char* argv[])
 			}
 			
 		}
-		cout << "he" << endl;
+		
 	}
 	
 }
