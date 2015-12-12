@@ -57,6 +57,10 @@ public:
 	{
 		loadfactor++;
 	}
+	void minusload()
+	{
+		loadfactor--;
+	}
 	int getId() const
 	{
 		return _id;
