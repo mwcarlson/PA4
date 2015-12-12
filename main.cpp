@@ -5,6 +5,7 @@
 #include "Packet.h"
 #include "Network.h"
 //using namespace std;
+//Team members for this assignment are: Michael Carlson (11424987, Section 2) and Martijn Oostrom (11420033, Section 1)
 vector<Vertex> VerticesTest(void)
 {
 	//populate graph
@@ -20,7 +21,7 @@ vector<Vertex> VerticesTest(void)
 	string curspot((istreambuf_iterator<char>(input)), istreambuf_iterator<char>());
 	//curspot now has entire input file as 1 massive string
 	maxsize = curspot.size();
-	cout << curspot << endl;
+	//cout << curspot << endl;
 
 	while (curspot[i + 1] != ' ')
 	{
@@ -101,7 +102,7 @@ Graph graphTest()
 	string curspot((istreambuf_iterator<char>(input)), istreambuf_iterator<char>());
 	//curspot now has entire input file as 1 massive string
 	maxsize = curspot.size();
-	cout << curspot << endl;
+	//cout << curspot << endl;
 	
 	while (curspot[i+1] != ' ')
 	{
@@ -142,6 +143,7 @@ Graph graphTest()
 			weightedge = stoi(modstring);
 			//smash on the new edge
 			vertices[fromvec].addEdge(&vertices[tovec], weightedge);
+			cout << "From vec: " << fromvec << " to vec: " << tovec << " with weight " << weightedge << endl;
 			modstring.clear();
 			focusmod = (focusmod + 1) % 3;
 		}
@@ -154,7 +156,7 @@ Graph graphTest()
 	}
 	//V I had a slight off-by 1 error, so these next few lines just does what my case '\n' does.
 	weightedge = stoi(modstring);
-	//cout << "From vec: " << fromvec << " to vec: " << tovec << " with weight " << weightedge << endl;
+	cout << "From vec: " << fromvec << " to vec: " << tovec << " with weight " << weightedge << endl;
 	
 	vertices[fromvec].addEdge(&vertices[tovec], weightedge);
 	modstring.clear();
@@ -205,7 +207,7 @@ int main(int argc, char* argv[])
 {
 	cout << "Team members for this assignment are: Michael Carlson (11424987, Section 2) and Martijn Oostrom (11420033, Section 1)" << endl;
 	char curchar = '\0';
-	int startvertex = 0, endvertex = 0, i=0;
+	int startvertex = 0, endvertex = 0, i=0, waittime=0;
 	string strmess;
 	Graph maingraph{};
 	Packet packet{};
@@ -229,7 +231,7 @@ int main(int argc, char* argv[])
 	Vertex vertexs{ startvertex };
 	
 	Vertex vertexe{ endvertex };
-	
+	Vertex vertexd{ endvertex };
 	packet.setPreviousLocation(&vertexs);
 
 	
@@ -238,12 +240,12 @@ int main(int argc, char* argv[])
 	packet.setDestination(0);
 	packet.setNextHop(&vertexe);
 	packet.setOrder(0);
-	cout << strmess<< endl;
-	cout << strmess.size() << endl;
+	//cout << strmess<< endl;
+	//cout << strmess.size() << endl;
 	while (i < strmess.size())
 	{
 		curchar = strmess[i];
-		cout << curchar << endl;
+		//cout << curchar << endl;
 		packet.setValue(curchar);
 		quepack.push(packet);
 		i++;
@@ -256,7 +258,7 @@ int main(int argc, char* argv[])
 	message.setstart(&vertexs);
 	message.setend(&vertexe);
 	network.setmessage(message);
-	unordered_map<Vertex, int> distances;
+	unordered_map<Vertex, int> *distances;
 	int edgelength = 0;
 	
 	while (i<quepack.size())
@@ -267,18 +269,53 @@ int main(int argc, char* argv[])
 		vertexs = *packet.getPreviousLocation();
 		
 		maingraph=network.getgraph();
-		cout << "hi5" << endl;
-		distances=maingraph.computeShortestPath(&vertices[0]);
 		cout << "hi4" << endl;
-		/*edgelength=distances[vertices[1]];
+		distances=maingraph.computeShortestPath(message.getstart());
+		cout << "hi5" << endl;
+		//edgelength=distances[vertices[1]];
 		packet.setCurrentWait(edgelength*vertices[1].getload());
 		packet.setDestination(&vertices[1]);
 		packet.setPreviousLocation(&vertices[0]);
-		vertices[1].plusload();*/
+		vertices[1].plusload();
+		vertices[0].plusload();
 		i++;
 		
 		
 	}
-	
+	//Check if not all items have reached the destination node
+	{
+		packet = quepack.front();
+		waittime=packet.getCurrentWait();
+		//if (waittime > 0)
+		{
+			packet.setCurrentWait(waittime - 1);
+			//if (waittime == 1)
+			{
+				//Packet now arriving at the next node, send to the new next node
+				vertexs = *(packet.getPreviousLocation());
+				vertexs.minusload();
+				vertexe = *(packet.getNextHop());
+				vertexe.minusload();
+				cout << "he2" << endl;
+				vertexd = *(packet.getDestination());
+				//if (vertexe.getId() != vertexd.getId())
+				{
+					cout << "he5" << endl;
+					//packet hasn't arrived at its destination yet
+					//distances = maingraph.computeShortestPath(&vertexe);
+				//	edgelength = distances[vertices[1]];
+					cout << "he3" << endl;
+					packet.setCurrentWait(edgelength*vertices[1].getload());
+					packet.setDestination(&vertices[1]);
+					cout << "he4" << endl;
+					packet.setPreviousLocation(&vertices[0]);
+					vertices[1].plusload();
+					vertices[0].plusload();
+				}
+			}
+			
+		}
+		cout << "he" << endl;
+	}
 	
 }
