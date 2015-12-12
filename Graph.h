@@ -18,7 +18,7 @@ public:
 	}
 
 	//MA #12 TODO: IMPLEMENT!
-	unordered_map<Vertex, int> computeShortestPath(Vertex *start)
+	unordered_map<Vertex, int> *computeShortestPath(Vertex *start)
 	{
 		//holds known distances
 		unordered_map<Vertex, int> distances;
@@ -65,7 +65,7 @@ public:
 				}
 			}
 
-			return distances;
+			return &distances;
 		}
 	}
 };
