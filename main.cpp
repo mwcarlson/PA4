@@ -234,45 +234,51 @@ int main(int argc, char* argv[])
 	Vertex vertexd{ endvertex };
 	packet.setPreviousLocation(&vertexs);
 
-	
+	//Set up packet with required info
 	packet.setDestination(&vertexe);
-	packet.setCurrentWait(0);
-	packet.setDestination(0);
+	
 	packet.setNextHop(&vertexe);
 	packet.setOrder(0);
 	//cout << strmess<< endl;
 	//cout << strmess.size() << endl;
 	while (i < strmess.size())
 	{
+		//
 		curchar = strmess[i];
 		//cout << curchar << endl;
-		packet.setValue(curchar);
+		
 		quepack.push(packet);
 		i++;
-		maingraph = network.getgraph();
+
 		
 	}
-
+	maingraph = network.getgraph();
 	i = 0;
+	//Set up messsage with required info
 	message.setqueue(quepack);
 	message.setstart(&vertexs);
 	message.setend(&vertexe);
 	network.setmessage(message);
 	unordered_map<Vertex, int> *distances;
-	int edgelength = 0;
-	
+	unordered_map<Vertex, int> *edgelength;
+	int bob = 0;
 	while (i<quepack.size())
 	{
+		//Still have parts of message to put onto graph
 		quepack = message.getqueue();
 		packet=quepack.front();
 		
 		vertexs = *packet.getPreviousLocation();
 		
-		maingraph=network.getgraph();
+		
 		cout << "hi4" << endl;
 		distances=maingraph.computeShortestPath(message.getstart());
+		
 		cout << "hi5" << endl;
-		//edgelength=distances[vertices[1]];
+		//edgelength = &distances[0];
+		edgelength = distances[message.getstart()];
+		//bob=(distances->begin())->second();
+		cout << "hi6" << endl;
 		packet.setCurrentWait(edgelength*vertices[1].getload());
 		packet.setDestination(&vertices[1]);
 		packet.setPreviousLocation(&vertices[0]);
@@ -288,6 +294,7 @@ int main(int argc, char* argv[])
 		waittime=packet.getCurrentWait();
 		//if (waittime > 0)
 		{
+			//Packet is moving from one vertex to another
 			packet.setCurrentWait(waittime - 1);
 			//if (waittime == 1)
 			{
@@ -300,10 +307,12 @@ int main(int argc, char* argv[])
 				vertexd = *(packet.getDestination());
 				//if (vertexe.getId() != vertexd.getId())
 				{
+
+					//Vertex that packet just arrived to was not the ending vector
 					cout << "he5" << endl;
 					//packet hasn't arrived at its destination yet
-					//distances = maingraph.computeShortestPath(&vertexe);
-				//	edgelength = distances[vertices[1]];
+					distances = maingraph.computeShortestPath(&vertexe);
+					//edgelength = distances[vertices[1]];
 					cout << "he3" << endl;
 					packet.setCurrentWait(edgelength*vertices[1].getload());
 					packet.setDestination(&vertices[1]);
