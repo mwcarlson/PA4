@@ -5,7 +5,9 @@
 #include "Packet.h"
 #include "Network.h"
 //using namespace std;
+
 //Team members for this assignment are: Michael Carlson (11424987, Section 2) and Martijn Oostrom (11420033, Section 1)
+
 vector<Vertex> VerticesTest(void)
 {
 	//populate graph
@@ -30,7 +32,6 @@ vector<Vertex> VerticesTest(void)
 		{
 			//We need to add a edge
 			vertices.push_back(Vertex{});
-
 		}
 
 		i++;
@@ -44,7 +45,6 @@ vector<Vertex> VerticesTest(void)
 			if (focusmod == 0)
 			{
 				//modstring now represents the originating node of the vector
-
 				fromvec = stoi(modstring);
 			}
 			else if (focusmod == 1)
@@ -70,8 +70,10 @@ vector<Vertex> VerticesTest(void)
 			//Need to add value to modstring
 			modstring += curspot[i];
 		}
+		
 		i++;
 	}
+	
 	//V I had a slight off-by 1 error, so these next few lines just does what my case '\n' does.
 	weightedge = stoi(modstring);
 	//cout << "From vec: " << fromvec << " to vec: " << tovec << " with weight " << weightedge << endl;
@@ -79,10 +81,10 @@ vector<Vertex> VerticesTest(void)
 	vertices[fromvec].addEdge(&vertices[tovec], weightedge);
 	modstring.clear();
 	//V  Adds all of the vertices to the graph
+	
 	for (auto vertex : vertices)
 	{
 		graph.addVertex(vertex);
-
 	}
 	
 	return vertices;
@@ -111,7 +113,6 @@ Graph graphTest()
 		{
 			//We need to add a edge
 			vertices.push_back(Vertex{});
-			
 		}
 		
 		i++;
@@ -125,7 +126,6 @@ Graph graphTest()
 			if (focusmod == 0)
 			{
 				//modstring now represents the originating node of the vector
-				
 				fromvec = stoi(modstring);
 			}
 			else if (focusmod == 1)
@@ -133,10 +133,12 @@ Graph graphTest()
 				//modstring now represents the ending node of the vector
 				tovec = stoi(modstring);
 			}
+			
 			//Change what it is we're reading (from, to, weight), and clean string
 			focusmod = (focusmod + 1) % 3;
 			modstring.clear();
 		}
+		
 		else if (curspot[i] == '\n')
 		{
 			//modstring now represents the weight of the edge 
@@ -148,12 +150,15 @@ Graph graphTest()
 			focusmod = (focusmod + 1) % 3;
 		}
 		else
+		
 		{
 			//Need to add value to modstring
 			modstring += curspot[i];
 		}
+		
 		i++;
 	}
+	
 	//V I had a slight off-by 1 error, so these next few lines just does what my case '\n' does.
 	weightedge = stoi(modstring);
 	cout << "From vec: " << fromvec << " to vec: " << tovec << " with weight " << weightedge << endl;
@@ -161,10 +166,10 @@ Graph graphTest()
 	vertices[fromvec].addEdge(&vertices[tovec], weightedge);
 	modstring.clear();
 	//V  Adds all of the vertices to the graph
+	
 	for (auto vertex : vertices)
 	{
 		graph.addVertex(vertex);
-		
 	}
 	//return graph;
 	
@@ -175,6 +180,7 @@ Graph graphTest()
 	cout << "Distance from 0 to 1: " << distances[vertices[1]] << " (expected: 4)" << endl;
 	cout << "Distance from 0 to 2: " << distances[vertices[2]] << " (expected: 8)" << endl;
 	cout << "Distance from 0 to 3: " << distances[vertices[3]] << " (expected: 12)" << endl;*/
+	
 	return graph;
 	/*
 	Graph: 0 -> 1 (weight 4)
@@ -206,15 +212,16 @@ Graph graphTest()
 int main(int argc, char* argv[])
 {
 	cout << "Team members for this assignment are: Michael Carlson (11424987, Section 2) and Martijn Oostrom (11420033, Section 1)" << endl;
+	
 	char curchar = '\0';
-	int startvertex = 0, endvertex = 0, i=0, waittime=0;
+	int startvertex = 0, endvertex = 0, i = 0, waittime = 0;
 	string strmess;
 	Graph maingraph{};
 	Packet packet{};
 	Network network{};
 	queue<Packet> quepack;
 	Message message{};
-	maingraph=graphTest();
+	maingraph = graphTest();
 	network.setgraph(maingraph);
 	vector<Vertex> vertices{};
 	vertices = VerticesTest();
@@ -226,10 +233,10 @@ int main(int argc, char* argv[])
 	cin >> endvertex;
 	cout << "What string message do you want to send?" << endl;
 	ws(cin);
+	
 	getline(cin, strmess);
 
 	Vertex vertexs{ startvertex };
-	
 	Vertex vertexe{ endvertex };
 	Vertex vertexd{ endvertex };
 	packet.setPreviousLocation(&vertexs);
@@ -241,6 +248,7 @@ int main(int argc, char* argv[])
 	packet.setOrder(0);
 	//cout << strmess<< endl;
 	//cout << strmess.size() << endl;
+	
 	while (i < strmess.size())
 	{
 		//
@@ -249,19 +257,21 @@ int main(int argc, char* argv[])
 		
 		quepack.push(packet);
 		i++;
-
-		
 	}
+	
 	maingraph = network.getgraph();
 	i = 0;
 	//Set up messsage with required info
+	
 	message.setqueue(quepack);
 	message.setstart(&vertexs);
 	message.setend(&vertexe);
 	network.setmessage(message);
+	
 	unordered_map<Vertex, int> *distances;
 	unordered_map<Vertex, int> *edgelength;
 	//int bob = 0;
+	
 	while (i<quepack.size())
 	{
 		//Still have parts of message to put onto graph
@@ -269,8 +279,6 @@ int main(int argc, char* argv[])
 		packet=quepack.front();
 		
 		vertexs = *packet.getPreviousLocation();
-		
-		
 		
 		distances=maingraph.computeShortestPath(message.getstart());
 		
@@ -283,12 +291,11 @@ int main(int argc, char* argv[])
 		//Set packet on course for next spot
 		packet.setDestination(&vertices[1]);
 		packet.setPreviousLocation(&vertices[0]);
+		
 		//packet.setCurrentWait(edgelength);
 		vertices[1].plusload();
 		vertices[0].plusload();
 		i++;
-		
-		
 	}
 	//Check if not all items have reached the destination node
 	{
@@ -309,7 +316,6 @@ int main(int argc, char* argv[])
 				vertexd = *(packet.getDestination());
 				//if (vertexe.getId() != vertexd.getId())
 				{
-
 					//Vertex that packet just arrived to was not the ending vector
 				
 					//packet hasn't arrived at its destination yet
@@ -318,8 +324,8 @@ int main(int argc, char* argv[])
 				
 				//	packet.setCurrentWait(edgelength*vertices[1].getload());
 					packet.setDestination(&vertices[1]);
-					
 					packet.setPreviousLocation(&vertices[0]);
+					
 					vertices[1].plusload();
 					vertices[0].plusload();
 				}
