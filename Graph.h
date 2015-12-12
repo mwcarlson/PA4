@@ -46,6 +46,8 @@ public:
 				if (distances.find(top) == distances.end())
 				{
 					//make known
+
+					//***Factor in getload here as well to decide time to take path
 					int current_path_weight = top.getPathWeight()*top.getload();
 					distances[top] = current_path_weight;
 
